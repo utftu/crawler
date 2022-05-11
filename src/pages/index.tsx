@@ -24,7 +24,7 @@ const Home: NextPage = () => {
     },
     validateSchema: yup
       .object({
-        url: yup.string().required(),
+        url: yup.string().url().required(),
         maxDepth: yup.number().max(2).required(),
         maxRequests: yup.number().max(40).required(),
       })
