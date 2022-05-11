@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "baseui": "^11.0.2",
+    "cross-fetch": "^3.1.5",
     "ffw": "^1.0.23",
     "next": "12.1.6",
     "react": "18.1.0",
