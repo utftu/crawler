@@ -59,7 +59,7 @@ const Home: NextPage = () => {
         />
         <Input
           className={'mt-8'}
-          label={{label: 'Max requests', error: ffw.f.maxRequests.error}}
+          label={{label: 'Max requests', error: ffw.f.maxRequests.error, caption: 'At the same time'}}
           input={{...ffw.f.maxRequests.getInput()}}
         />
         <Button className={'mt-8'} onClick={ffw.submit}>
