@@ -9,6 +9,8 @@ import {ListItem, ListItemLabel} from "baseui/list";
 import {Check, Search} from "baseui/icon";
 import Show from "../components/show";
 import {DisplayXSmall} from "baseui/typography";
+import {Spinner} from "baseui/icon";
+import Links from "../components/links";
 
 
 const Home: NextPage = () => {
@@ -17,6 +19,11 @@ const Home: NextPage = () => {
   const [startTime, setStartTime] = useState('')
   const [finishTime, setFinishTime] = useState('')
   const ffw = useInitFfw({
+    initValues: {
+       url: 'https://google.com',
+      maxDepth: 2,
+      maxRequests: 30
+    },
     validateSchema: yup.object({
       url: yup.string().required(),
       maxDepth: yup.number().max(4).required(),
@@ -24,7 +31,7 @@ const Home: NextPage = () => {
     }).required(),
     async onSubmit(ffw) {
       setStartTime(new Date().toISOString())
-      setFinishTime('waiting')
+      setFinishTime('')
       setLinks([])
       const links = await getLinks(encodeURIComponent(ffw.f.url.value), ffw.f.maxDepth.value, ffw.f.maxRequests.value)
       setFinishTime(new Date().toISOString())
@@ -46,14 +53,14 @@ const Home: NextPage = () => {
         >
           Search
         </Button>
+        <Show show={startTime && !finishTime}>
+          <Spinner size={50} className={'animate-spin self-center mt-16'}/>
+        </Show>
         <Show show={links.length}>
           <div className={'pt-16 flex flex-col gap-2'}>
             <DisplayXSmall className={'self-center'}>
               Links
             </DisplayXSmall>
-            <div>
-
-            </div>
             <div>
               Count {links.length}
             </div>
@@ -63,17 +70,7 @@ const Home: NextPage = () => {
             <div>
               Finish time: {finishTime}
             </div>
-            <ul>
-              {links.map((link) => {
-                return (
-                  <ListItem
-                    artwork={props => <Check {...props} />}
-                  >
-                    <ListItemLabel key={link}>{link}</ListItemLabel>
-                  </ListItem>
-                )
-              })}
-            </ul>
+            <Links links={links}/>
           </div>
         </Show>
       </div>

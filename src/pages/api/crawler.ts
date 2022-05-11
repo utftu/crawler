@@ -13,10 +13,6 @@ export default async function handler(
     res.status(418).send('')
     return
   }
-  console.log('-----', 'start')
-  console.log('-----', 'url, Number(max_depth), Number(max_requests)', url, max_depth, max_requests)
   const results = await Crawler.new(url, Number(max_depth), Number(max_requests)).start()
-  console.log('-----', 'end')
-  console.log('-----', 'results', results)
   res.json(results)
 }
